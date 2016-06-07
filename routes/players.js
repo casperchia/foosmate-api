@@ -46,7 +46,8 @@ router.post('/addPlayer', function(req, res){
    player.save(function(err, player){
       if(err){
          console.log(err);
-         res.send(err);
+         res.status(500).send('Please enter another name');
+         // res.send(err);
       }else{
          res.json(player);
       }
