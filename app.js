@@ -22,6 +22,15 @@ var app = express();
 
 app.use(cors());
 
+// Prevents caching when browser makes requests.
+// This was an issue for IE
+app.use(function noCache(req, res, next) {
+  res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.header("Pragma", "no-cache");
+  res.header("Expires", 0);
+  next();
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
