@@ -7,8 +7,8 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var mongoose = require('mongoose');
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var players = require('./routes/players');
+var matches = require('./routes/matches');
 
 mongoose.connect('mongodb://localhost/foosmate2')
 var db = mongoose.connection;
@@ -44,8 +44,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
 app.use('/players', players);
+app.use('/matches', matches);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
