@@ -17,39 +17,19 @@ router.get('/', function(req, res) {
 
 // Save match
 router.post('/saveMatch', function(req, res){
-   var name = req.body.name;
-   var updatedData = {
-      rating: req.body.rating,
-      leaguePoints: req.body.leaguePoints,
-      rankedMatches: req.body.rankedMatches,
-      leagueMatches: req.body.leagueMatches,
-   }
-   Player.update({name: name}, updatedData, function(err, data){
-      if(err){
-         res.send(err);
-      }else{
-         res.json(data);
-      }
-   })
+   var match = new Match();
+   match.player1 = req.body.player1;
+   match.player2 = req.body.player2;
+   match.datePlayed = req.body.datePlayed;
+   match.winner = req.body.winner;
+   match.mode = req.body.mode;
 
-})
-
-// Add new player
-router.post('/addPlayer', function(req, res){
-   var player = new Player();
-   player.name = req.body.name;
-   player.rating = 1000;
-   player.leaguePoints = 0;
-   player.rankedMatches = [];
-   player.leagueMatches = [];
-
-   player.save(function(err, player){
+   match.save(function(err, match){
       if(err){
          console.log(err);
-         res.status(500).send('Please enter another name');
-         // res.send(err);
+         res.status(500).send('Error saving match');
       }else{
-         res.json(player);
+         res.json(match);
       }
    })
 })
