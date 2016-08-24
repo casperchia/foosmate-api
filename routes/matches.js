@@ -15,6 +15,28 @@ router.get('/', function(req, res) {
    })
 });
 
+router.get('/recent/:playerName', function(req, res){
+   var playerName = req.params.playerName;
+   console.log(playerName);
+   Match.find({
+         $or: [
+            {"player1.name": playerName},
+            {"player2.name": playerName}
+         ]
+      })
+      .sort({datePlayed: -1})
+      .limit(3)
+      .exec(function(err, results) {
+         if (err) {
+            console.error(err);
+            res.send(err);
+         } else {
+            res.json(results);
+         }
+      });
+
+});
+
 // Save match
 router.post('/saveMatch', function(req, res){
    var match = new Match();
